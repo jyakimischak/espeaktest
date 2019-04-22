@@ -1,0 +1,3 @@
+﻿  eSpeakTest.cpp
+C:\Users\karma\projects\eSpeakTest\eSpeakTest\eSpeakTest\eSpeakTest.cpp(110): warning C4101: 'sampleBlock': unreferenced local variable
+  eSpeakTest.vcxproj -> C:\Users\karma\projects\eSpeakTest\eSpeakTest\Debug\eSpeakTest.exe
