@@ -6,22 +6,20 @@
 #include<portaudio.h>
 
 
+const int NUM_CHANNELS = 1;
+const int PA_SAMPLE_TYPE = paInt16;
+const int SAMPLE_RATE = 22050;
+const int FRAMES_PER_BUFFER = 10;
+PaStreamParameters inputParameters;
+PaStreamParameters outputParameters;
+PaStream* stream;
+//const int* sampleBlock;
+void* sampleBlock[2];
+PaError err;
 
-void paTest() {
-
-	const int NUM_CHANNELS = 1;
-	const int PA_SAMPLE_TYPE = paInt16;
-	const int SAMPLE_RATE = 2000;
-	const int FRAMES_PER_BUFFER = 10;
-
-	PaStreamParameters inputParameters;
-	PaStreamParameters outputParameters;
-	PaStream* stream;
-	//const int* sampleBlock;
-	void* sampleBlock[2];
-
+void initStream() {
 	/* -- initialize PortAudio -- */
-	PaError err = Pa_Initialize();
+	err = Pa_Initialize();
 	if (err != paNoError) {
 		printf("error");
 		return;
@@ -57,22 +55,9 @@ void paTest() {
 		printf("error");
 		return;
 	}
-	printf("Wire on. Will run one minute.\n"); fflush(stdout);
-	/* -- Here's the loop where we pass data from input to output -- */
-	for (int i = 0; i < (60 * SAMPLE_RATE) / FRAMES_PER_BUFFER; ++i)
-	{
-		err = Pa_WriteStream(stream, sampleBlock, FRAMES_PER_BUFFER);
-		if (err) {
-			printf("error");
-			return;
-		}
-		//err = Pa_ReadStream(stream, sampleBlock, FRAMES_PER_BUFFER);
-		//if (err) {
-		//	printf("error");
-		//	return;
-		//}
-	}
-	/* -- Now we stop the stream -- */
+}
+
+void closeStream() {
 	err = Pa_StopStream(stream);
 	if (err != paNoError) {
 		printf("error");
@@ -87,107 +72,228 @@ void paTest() {
 	Pa_Terminate();
 }
 
-
-
-
-
-
-
-
-
-
 int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
-
-	const int NUM_CHANNELS = 1;
-	const int PA_SAMPLE_TYPE = paInt16;
-	const int SAMPLE_RATE = 22050;
-	const int FRAMES_PER_BUFFER = 10;
-
-	PaStreamParameters inputParameters;
-	PaStreamParameters outputParameters;
-	PaStream* stream;
-	//const int* sampleBlock;
-	void* sampleBlock[2];
-
-	/* -- initialize PortAudio -- */
-	PaError err = Pa_Initialize();
-	if (err != paNoError) {
-		printf("error");
-		return 0;
-	}
-	/* -- setup input and output -- */
-	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-	inputParameters.channelCount = NUM_CHANNELS;
-	inputParameters.sampleFormat = PA_SAMPLE_TYPE;
-	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultHighInputLatency;
-	inputParameters.hostApiSpecificStreamInfo = NULL;
-	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
-	outputParameters.channelCount = NUM_CHANNELS;
-	outputParameters.sampleFormat = PA_SAMPLE_TYPE;
-	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultHighOutputLatency;
-	outputParameters.hostApiSpecificStreamInfo = NULL;
-	/* -- setup stream -- */
-	err = Pa_OpenStream(
-		&stream,
-		&inputParameters,
-		&outputParameters,
-		SAMPLE_RATE,
-		FRAMES_PER_BUFFER,
-		paClipOff,      /* we won't output out of range samples so don't bother clipping them */
-		NULL, /* no callback, use blocking API */
-		NULL); /* no callback, so no callback userData */
-	if (err != paNoError) {
-		printf("error");
-		return 0;
-	}
-	/* -- start stream -- */
-	err = Pa_StartStream(stream);
-	if (err != paNoError) {
-		printf("error");
-		return 0;
-	}
-
 	err = Pa_WriteStream(stream, wav, numsamples);
 	if (err) {
 		printf("error: %i", err);
 		return 0;
 	}
-
-
-	/* -- Now we stop the stream -- */
-	err = Pa_StopStream(stream);
-	if (err != paNoError) {
-		printf("error");
-		return 0;
-	}
-	/* -- don't forget to cleanup! -- */
-	err = Pa_CloseStream(stream);
-	if (err != paNoError) {
-		printf("error");
-		return 0;
-	}
-	Pa_Terminate();
 	return 0;
 }
 
-
-
-//int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
-//	printf("num samples: %i\n", numsamples);
-//	return 0;
-//}
-int main()
-{
-	//paTest();
-	//return 0;
+int main() {
+	initStream();
 
 	int sr = espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS, 0, "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest", 0);
 	printf("sample rate: %i\n", sr);
 	espeak_SetSynthCallback(SynthCallback);
-	espeak_ERROR err = espeak_Synth("hello, hello", 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
+	espeak_ERROR err = espeak_Synth("Hello world", 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
 	printf("return code: %i\n", (int)err);
 	espeak_Terminate();
+
+	closeStream();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////---------------------------------------------------- DEBUG ----------------------------------------------------
+////Play a test sound
+//void paTest() {
+//
+//	const int NUM_CHANNELS = 1;
+//	const int PA_SAMPLE_TYPE = paInt16;
+//	const int SAMPLE_RATE = 2000;
+//	const int FRAMES_PER_BUFFER = 10;
+//
+//	PaStreamParameters inputParameters;
+//	PaStreamParameters outputParameters;
+//	PaStream* stream;
+//	//const int* sampleBlock;
+//	void* sampleBlock[2];
+//
+//	/* -- initialize PortAudio -- */
+//	PaError err = Pa_Initialize();
+//	if (err != paNoError) {
+//		printf("error");
+//		return;
+//	}
+//	/* -- setup input and output -- */
+//	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+//	inputParameters.channelCount = NUM_CHANNELS;
+//	inputParameters.sampleFormat = PA_SAMPLE_TYPE;
+//	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultHighInputLatency;
+//	inputParameters.hostApiSpecificStreamInfo = NULL;
+//	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
+//	outputParameters.channelCount = NUM_CHANNELS;
+//	outputParameters.sampleFormat = PA_SAMPLE_TYPE;
+//	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultHighOutputLatency;
+//	outputParameters.hostApiSpecificStreamInfo = NULL;
+//	/* -- setup stream -- */
+//	err = Pa_OpenStream(
+//		&stream,
+//		&inputParameters,
+//		&outputParameters,
+//		SAMPLE_RATE,
+//		FRAMES_PER_BUFFER,
+//		paClipOff,      /* we won't output out of range samples so don't bother clipping them */
+//		NULL, /* no callback, use blocking API */
+//		NULL); /* no callback, so no callback userData */
+//	if (err != paNoError) {
+//		printf("error");
+//		return;
+//	}
+//	/* -- start stream -- */
+//	err = Pa_StartStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return;
+//	}
+//	printf("Wire on. Will run one minute.\n"); fflush(stdout);
+//	/* -- Here's the loop where we pass data from input to output -- */
+//	for (int i = 0; i < (60 * SAMPLE_RATE) / FRAMES_PER_BUFFER; ++i)
+//	{
+//		err = Pa_WriteStream(stream, sampleBlock, FRAMES_PER_BUFFER);
+//		if (err) {
+//			printf("error");
+//			return;
+//		}
+//		//err = Pa_ReadStream(stream, sampleBlock, FRAMES_PER_BUFFER);
+//		//if (err) {
+//		//	printf("error");
+//		//	return;
+//		//}
+//	}
+//	/* -- Now we stop the stream -- */
+//	err = Pa_StopStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return;
+//	}
+//	/* -- don't forget to cleanup! -- */
+//	err = Pa_CloseStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return;
+//	}
+//	Pa_Terminate();
+//}
+//
+////---------------------------------------------------- DEBUG ----------------------------------------------------
+//int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
+//
+//	const int NUM_CHANNELS = 1;
+//	const int PA_SAMPLE_TYPE = paInt16;
+//	const int SAMPLE_RATE = 22050;
+//	const int FRAMES_PER_BUFFER = 10;
+//
+//	PaStreamParameters inputParameters;
+//	PaStreamParameters outputParameters;
+//	PaStream* stream;
+//	//const int* sampleBlock;
+//	void* sampleBlock[2];
+//
+//	/* -- initialize PortAudio -- */
+//	PaError err = Pa_Initialize();
+//	if (err != paNoError) {
+//		printf("error");
+//		return 0;
+//	}
+//	/* -- setup input and output -- */
+//	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
+//	inputParameters.channelCount = NUM_CHANNELS;
+//	inputParameters.sampleFormat = PA_SAMPLE_TYPE;
+//	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultHighInputLatency;
+//	inputParameters.hostApiSpecificStreamInfo = NULL;
+//	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
+//	outputParameters.channelCount = NUM_CHANNELS;
+//	outputParameters.sampleFormat = PA_SAMPLE_TYPE;
+//	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultHighOutputLatency;
+//	outputParameters.hostApiSpecificStreamInfo = NULL;
+//	/* -- setup stream -- */
+//	err = Pa_OpenStream(
+//		&stream,
+//		&inputParameters,
+//		&outputParameters,
+//		SAMPLE_RATE,
+//		FRAMES_PER_BUFFER,
+//		paClipOff,      /* we won't output out of range samples so don't bother clipping them */
+//		NULL, /* no callback, use blocking API */
+//		NULL); /* no callback, so no callback userData */
+//	if (err != paNoError) {
+//		printf("error");
+//		return 0;
+//	}
+//	/* -- start stream -- */
+//	err = Pa_StartStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return 0;
+//	}
+//
+//	err = Pa_WriteStream(stream, wav, numsamples);
+//	if (err) {
+//		printf("error: %i", err);
+//		return 0;
+//	}
+//
+//
+//	/* -- Now we stop the stream -- */
+//	err = Pa_StopStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return 0;
+//	}
+//	/* -- don't forget to cleanup! -- */
+//	err = Pa_CloseStream(stream);
+//	if (err != paNoError) {
+//		printf("error");
+//		return 0;
+//	}
+//	Pa_Terminate();
+//	return 0;
+//}
+//
+//
+//
+////int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
+////	printf("num samples: %i\n", numsamples);
+////	return 0;
+////}
+//int main()
+//{
+//	//paTest();
+//	//return 0;
+//
+//	int sr = espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS, 0, "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest", 0);
+//	printf("sample rate: %i\n", sr);
+//	espeak_SetSynthCallback(SynthCallback);
+//	espeak_ERROR err = espeak_Synth("hello, hello", 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
+//	printf("return code: %i\n", (int)err);
+//	espeak_Terminate();
+//}
 
 
 
