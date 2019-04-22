@@ -1,10 +1,8 @@
 
-
 #include <espeak/speak_lib.h>
 #include<stdlib.h>
 #include<Windows.h>
 #include<portaudio.h>
-
 
 const int NUM_CHANNELS = 1;
 const int PA_SAMPLE_TYPE = paInt16;
@@ -81,445 +79,210 @@ int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
 	return 0;
 }
 
+void sayLine(const char* voice, const char* line) {
+	printf("%s\n", voice);
+	espeak_SetVoiceByName(voice);
+	espeak_SetSynthCallback(SynthCallback);
+	espeak_ERROR err = espeak_Synth(line, 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
+}
+
 int main() {
 	initStream();
 
 	int sr = espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS, 0, "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest", 0);
-	printf("sample rate: %i\n", sr);
-	espeak_SetSynthCallback(SynthCallback);
-	espeak_ERROR err = espeak_Synth("Hello world", 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
-	printf("return code: %i\n", (int)err);
-	espeak_Terminate();
+	printf("sample rate: %i\n\n\n", sr);
 
+	//sayLine("mk", "I regret to inform you that my systems are maa aa aalfunctioning.");
+	sayLine("croak", "Why the hell did I take this job.  I could be a bank machine.");
+
+	////good ones
+	//sayLine("default", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-us", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("klatt", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("vi", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-wm", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("as", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("croak", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f4", "Hello passengers. Welcome to the starship enterprise.");
+
+	////fun
+	//sayLine("whisper", "I've got a secret.");
+
+	////broken
+	//sayLine("da", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fr-be", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hu", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mk", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("jbo", "Hello passengers. Welcome to the starship enterprise.");
+
+
+	//ALL
+	//sayLine("de", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("default", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-us", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("es-la", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fr", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("pt", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("croak", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("f5", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("klatt", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("klatt2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("klatt3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("klatt4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m5", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m6", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("m7", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("whisper", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("whisperf", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fa", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fa-pin", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hi", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hy", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hy-west", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("id", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ka", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("kn", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ku", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ml", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ms", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ne", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("pa", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ta", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("tr", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("vi", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("vi-hue", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("vi-sgn", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("zh", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("zh-yue", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("an", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("bg", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("bs", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ca", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("cs", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("cy", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("da", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("el", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("es", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("et", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fi", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("fr-be", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ga", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hr", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("hu", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("is", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("it", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("lt", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("lv", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mk", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("nl", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("no", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("pl", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("pt-pt", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ro", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ru", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sk", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sq", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sr", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sv", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-af1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-af1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-br1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-br3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-br4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-cr1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-cz2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de4-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de5", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de5-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de6", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de6-grc", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-de7", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ee1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-en1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-es1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-es2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-fr1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-fr1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-fr4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-fr4-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-gr2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-gr2-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-hu1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-hu1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ic1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-id1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ir1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ir2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-it3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-it4", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-la1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-mx1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-mx2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-nl2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-nl2-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-pl1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-pl1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-pt1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ro1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-ro1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-sw1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-sw1-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-sw2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-sw2-en", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-tr1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-tr2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-us1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-us2", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-us3", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("mb-vz1", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("af", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-n", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-rp", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-sc", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-wi", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("en-wm", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("eo", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("grc", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("jbo", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("la", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("lfn", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sw", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("am", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("as", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("az", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("bn", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("eu", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("gd", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("gu", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("kl", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ko", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("nci", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("or", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("pap", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("si", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("sl", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("te", "Hello passengers. Welcome to the starship enterprise.");
+	//sayLine("ur", "Hello passengers. Welcome to the starship enterprise.");
+
+	printf("\n\n\n");
+
+	espeak_Terminate();
 	closeStream();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////---------------------------------------------------- DEBUG ----------------------------------------------------
-////Play a test sound
-//void paTest() {
-//
-//	const int NUM_CHANNELS = 1;
-//	const int PA_SAMPLE_TYPE = paInt16;
-//	const int SAMPLE_RATE = 2000;
-//	const int FRAMES_PER_BUFFER = 10;
-//
-//	PaStreamParameters inputParameters;
-//	PaStreamParameters outputParameters;
-//	PaStream* stream;
-//	//const int* sampleBlock;
-//	void* sampleBlock[2];
-//
-//	/* -- initialize PortAudio -- */
-//	PaError err = Pa_Initialize();
-//	if (err != paNoError) {
-//		printf("error");
-//		return;
-//	}
-//	/* -- setup input and output -- */
-//	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-//	inputParameters.channelCount = NUM_CHANNELS;
-//	inputParameters.sampleFormat = PA_SAMPLE_TYPE;
-//	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultHighInputLatency;
-//	inputParameters.hostApiSpecificStreamInfo = NULL;
-//	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
-//	outputParameters.channelCount = NUM_CHANNELS;
-//	outputParameters.sampleFormat = PA_SAMPLE_TYPE;
-//	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultHighOutputLatency;
-//	outputParameters.hostApiSpecificStreamInfo = NULL;
-//	/* -- setup stream -- */
-//	err = Pa_OpenStream(
-//		&stream,
-//		&inputParameters,
-//		&outputParameters,
-//		SAMPLE_RATE,
-//		FRAMES_PER_BUFFER,
-//		paClipOff,      /* we won't output out of range samples so don't bother clipping them */
-//		NULL, /* no callback, use blocking API */
-//		NULL); /* no callback, so no callback userData */
-//	if (err != paNoError) {
-//		printf("error");
-//		return;
-//	}
-//	/* -- start stream -- */
-//	err = Pa_StartStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return;
-//	}
-//	printf("Wire on. Will run one minute.\n"); fflush(stdout);
-//	/* -- Here's the loop where we pass data from input to output -- */
-//	for (int i = 0; i < (60 * SAMPLE_RATE) / FRAMES_PER_BUFFER; ++i)
-//	{
-//		err = Pa_WriteStream(stream, sampleBlock, FRAMES_PER_BUFFER);
-//		if (err) {
-//			printf("error");
-//			return;
-//		}
-//		//err = Pa_ReadStream(stream, sampleBlock, FRAMES_PER_BUFFER);
-//		//if (err) {
-//		//	printf("error");
-//		//	return;
-//		//}
-//	}
-//	/* -- Now we stop the stream -- */
-//	err = Pa_StopStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return;
-//	}
-//	/* -- don't forget to cleanup! -- */
-//	err = Pa_CloseStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return;
-//	}
-//	Pa_Terminate();
-//}
-//
-////---------------------------------------------------- DEBUG ----------------------------------------------------
-//int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
-//
-//	const int NUM_CHANNELS = 1;
-//	const int PA_SAMPLE_TYPE = paInt16;
-//	const int SAMPLE_RATE = 22050;
-//	const int FRAMES_PER_BUFFER = 10;
-//
-//	PaStreamParameters inputParameters;
-//	PaStreamParameters outputParameters;
-//	PaStream* stream;
-//	//const int* sampleBlock;
-//	void* sampleBlock[2];
-//
-//	/* -- initialize PortAudio -- */
-//	PaError err = Pa_Initialize();
-//	if (err != paNoError) {
-//		printf("error");
-//		return 0;
-//	}
-//	/* -- setup input and output -- */
-//	inputParameters.device = Pa_GetDefaultInputDevice(); /* default input device */
-//	inputParameters.channelCount = NUM_CHANNELS;
-//	inputParameters.sampleFormat = PA_SAMPLE_TYPE;
-//	inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputParameters.device)->defaultHighInputLatency;
-//	inputParameters.hostApiSpecificStreamInfo = NULL;
-//	outputParameters.device = Pa_GetDefaultOutputDevice(); /* default output device */
-//	outputParameters.channelCount = NUM_CHANNELS;
-//	outputParameters.sampleFormat = PA_SAMPLE_TYPE;
-//	outputParameters.suggestedLatency = Pa_GetDeviceInfo(outputParameters.device)->defaultHighOutputLatency;
-//	outputParameters.hostApiSpecificStreamInfo = NULL;
-//	/* -- setup stream -- */
-//	err = Pa_OpenStream(
-//		&stream,
-//		&inputParameters,
-//		&outputParameters,
-//		SAMPLE_RATE,
-//		FRAMES_PER_BUFFER,
-//		paClipOff,      /* we won't output out of range samples so don't bother clipping them */
-//		NULL, /* no callback, use blocking API */
-//		NULL); /* no callback, so no callback userData */
-//	if (err != paNoError) {
-//		printf("error");
-//		return 0;
-//	}
-//	/* -- start stream -- */
-//	err = Pa_StartStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return 0;
-//	}
-//
-//	err = Pa_WriteStream(stream, wav, numsamples);
-//	if (err) {
-//		printf("error: %i", err);
-//		return 0;
-//	}
-//
-//
-//	/* -- Now we stop the stream -- */
-//	err = Pa_StopStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return 0;
-//	}
-//	/* -- don't forget to cleanup! -- */
-//	err = Pa_CloseStream(stream);
-//	if (err != paNoError) {
-//		printf("error");
-//		return 0;
-//	}
-//	Pa_Terminate();
-//	return 0;
-//}
-//
-//
-//
-////int SynthCallback(short* wav, int numsamples, espeak_EVENT* events) {
-////	printf("num samples: %i\n", numsamples);
-////	return 0;
-////}
-//int main()
-//{
-//	//paTest();
-//	//return 0;
-//
-//	int sr = espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS, 0, "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest", 0);
-//	printf("sample rate: %i\n", sr);
-//	espeak_SetSynthCallback(SynthCallback);
-//	espeak_ERROR err = espeak_Synth("hello, hello", 20, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
-//	printf("return code: %i\n", (int)err);
-//	espeak_Terminate();
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///*
-//   TITLE: Simple C/C++ Program showing use of speak_lib.h
-//   AUTHOR:Dhananjay Singh
-//   LICENSE: GPLv2
-//*/
-//#include <string.h>
-//#include <malloc.h>
-//#include <espeak/speak_lib.h>
-//
-//
-//
-//espeak_POSITION_TYPE position_type;
-//espeak_AUDIO_OUTPUT output;
-//char path[] = { "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest" };
-//int Buflength = 500, Options = 0;
-//void* user_data;
-//t_espeak_callback* SynthCallback;
-//espeak_PARAMETER Parm;
-//
-///*
-//   FROM speak_lib.h :
-//
-//   output: the audio data can either be played by eSpeak or passed back by the SynthCallback function.
-//
-//   Buflength:  The length in mS of sound buffers passed to the SynthCallback function.
-//
-//   options: bit 0: 1=allow espeakEVENT_PHONEME events.
-//
-//   path: The directory which contains the espeak-data directory, or NULL for the default location.
-//
-//   espeak_Initialize() Returns: sample rate in Hz, or -1 (EE_INTERNAL_ERROR).
-//*/
-//
-//char Voice[] = { "lt+klatt2" };
-///*
-//	Voice: Refer to speak_lib.h
-//*/
-//
-//char text[30] = { "Labas. Šauk. Laikas. Taika" };
-//unsigned int Size, position = 0, end_position = 0, flags = espeakCHARS_AUTO, * unique_identifier;
-//
-///*
-//   text: The text to be spoken, terminated by a zero character. It may be either 8-bit characters,
-//	  wide characters (wchar_t), or UTF8 encoding.  Which of these is determined by the "flags"
-//	  parameter.
-//
-//   Size: Equal to (or greatrer than) the size of the text data, in bytes.  This is used in order
-//	  to allocate internal storage space for the text.  This value is not used for
-//	  AUDIO_OUTPUT_SYNCHRONOUS mode.
-//
-//   position:  The position in the text where speaking starts. Zero indicates speak from the
-//	  start of the text.
-//
-//   position_type:  Determines whether "position" is a number of characters, words, or sentences.
-//	  Values:
-//
-//   end_position:  If set, this gives a character position at which speaking will stop.  A value
-//	  of zero indicates no end position.
-//
-//   flags:  These may be OR'd together:
-//	  Type of character codes, one of:
-//		 espeakCHARS_UTF8     UTF8 encoding
-//		 espeakCHARS_8BIT     The 8 bit ISO-8859 character set for the particular language.
-//		 espeakCHARS_AUTO     8 bit or UTF8  (this is the default)
-//		 espeakCHARS_WCHAR    Wide characters (wchar_t)
-//
-//	  espeakSSML   Elements within < > are treated as SSML elements, or if not recognised are ignored.
-//
-//	  espeakPHONEMES  Text within [[ ]] is treated as phonemes codes (in espeak's Hirshenbaum encoding).
-//
-//	  espeakENDPAUSE  If set then a sentence pause is added at the end of the text.  If not set then
-//		 this pause is suppressed.
-//
-//   unique_identifier: message identifier; helpful for identifying later
-//	 data supplied to the callback.
-//
-//   user_data: pointer which will be passed to the callback function.
-//
-//   espeak_Synth() Returns: EE_OK: operation achieved
-//						   EE_BUFFER_FULL: the command can not be buffered;
-//						   you may try after a while to call the function again.
-//						   EE_INTERNAL_ERROR.
-//*/
-//
-//
-//
-//
-//
-//int main(int argc, char* argv[])
-//{
-//	output = AUDIO_OUTPUT_PLAYBACK;
-//	int I, Run = 1, L;
-//	espeak_Initialize(output, Buflength, path, Options);
-//	//espeak_SetVoiceByName(Voice);
-//	const char* langNativeString = "lt"; //Default to US English
-//	espeak_VOICE voice;
-//	memset(&voice, 0, sizeof(espeak_VOICE)); // Zero out the voice first
-//	voice.languages = langNativeString;
-//	voice.name = "klatt";
-//	voice.variant = 2;
-//	voice.gender = 1;
-//	espeak_SetVoiceByProperties(&voice);
-//	Size = strlen(text) + 1;
-//	printf("Saying  '%s'", text);
-//	espeak_Synth(text, Size, position, position_type, end_position, flags,
-//		unique_identifier, user_data);
-//	espeak_Synchronize();
-//	printf("\n:Done\n");
-//	return 0;
-//}
-
-
-
-//#include <iostream>
-//
-//#include <string.h>
-//#include <malloc.h>
-//#include <espeak/speak_lib.h>
-//
-//
-//
-//espeak_POSITION_TYPE position_type;
-//espeak_AUDIO_OUTPUT output;
-//char path[] = { "C:\\Users\\karma\\projects\\eSpeakTest\\eSpeakTest" };
-//int Buflength = 500, Options = 0;
-//void* user_data;
-//t_espeak_callback* SynthCallback;
-//espeak_PARAMETER Parm;
-//
-//
-//
-////char Voice[] = {"lt+klatt2"};
-//char Voice[] = { "English" };
-//
-//char text[30] = { "this is a english test" };
-//unsigned int Size, position = 0, end_position = 0, flags = espeakCHARS_AUTO, * unique_identifier;
-//
-//
-//
-//
-//int main(int argc, char* argv[])
-//{
-//	output = AUDIO_OUTPUT_PLAYBACK;
-//	int I, Run = 1, L;
-//	espeak_Initialize(output, Buflength, path, Options);
-//	espeak_SetVoiceByName(Voice);
-//	//const char *langNativeString = "lt"; //Default to US English
-//	const char* langNativeString = "en"; //Default to US English
-//	espeak_VOICE voice;
-//	memset(&voice, 0, sizeof(espeak_VOICE)); // Zero out the voice first
-//	voice.languages = langNativeString;
-//	//voice.name = "klatt";
-//	voice.name = "US";
-//	voice.variant = 2;
-//	voice.gender = 1;
-//	//espeak_SetVoiceByProperties(&voice);
-//	Size = strlen(text) + 1;
-//	printf("Saying  '%s'", text);
-//
-//	espeak_Synth(text, Size, position, position_type, end_position, flags,
-//		unique_identifier, user_data);
-//
-//
-//
-//	espeak_Synchronize();
-//	printf("\n:Done\n");
-//	return 0;
-//}
-
-
-
-
-
-
-
-
-
-//// eSpeakTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-////
-//
-//#include <iostream>
-//#include <espeak/speak_lib.h>
-//
-//int main()
-//{
-//    std::cout << "Hello World!\n"; 
-//
-//	espeak_ListVoices(NULL);
-//}
-//
-//// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-//// Debug program: F5 or Debug > Start Debugging menu
-//
-//// Tips for Getting Started: 
-////   1. Use the Solution Explorer window to add/manage files
-////   2. Use the Team Explorer window to connect to source control
-////   3. Use the Output window to see build output and other messages
-////   4. Use the Error List window to view errors
-////   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-////   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
